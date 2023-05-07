@@ -1,0 +1,123 @@
+enerator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider          = "sqlserver"
+  url               = env("DATABASE_URL")
+  shadowDatabaseUrl = env("SHADOW_DATABASE_URL")
+}
+
+model User {
+  id             String    @id @default(cuid())
+  cpf            String    @unique
+  email          String    @unique
+  username       String    @unique @db.VarChar(255)
+  password       String    @db.VarChar(255)
+  name           String
+  last_name      String
+  rg             String?
+  sex            String
+  birth_date     DateTime?
+  address_cep    String
+  address_number String
+  tickets        Ticket[]  @relation("traveller")
+  created_at     DateTime  @default(now())
+  updated_at     DateTime? @updatedAt
+}
+
+model Pilot {
+  cpf                      String            @id
+  name                     String
+  last_name                String
+  rg                       String?
+  sex                      String
+  birth_date               DateTime?
+  address_cep              String
+  address_number           String
+  salary                   Decimal
+  vaccination_number       Int               @unique
+  passport_number          Int               @unique
+  work_registration_number Int               @unique
+  pilot_license_number     Int               @unique
+  co_flights               Flight_Instance[] @relation("copilot")
+  flights                  Flight_Instance[] @relation("pilot")
+}
+
+model Fly_Attendant {
+  cpf                      String            @id
+  name                     String
+  last_name                String
+  rg                       String?
+  sex                      String
+  birth_date               DateTime?
+  address_cep              String
+  address_number           String
+  salary                   Decimal
+  vaccination_number       Int               @unique
+  passport_number          Int               @unique
+  work_registration_number Int               @unique
+  flights                  Flight_Instance[]
+}
+
+model Terminal {
+  id       Int               @id @default(autoincrement())
+  capacity Int
+  flights  Flight_Instance[] @relation("terminal")
+}
+
+model Flight {
+  id                       Int              @id @default(autoincrement())
+  estimated_departure_date DateTime
+  estimated_arrival_date   DateTime
+  origin                   String
+  destination              String
+  flight_instance          Flight_Instance?
+}
+
+model Flight_Instance {
+  id             Int             @id @default(autoincrement())
+  departure_date DateTime
+  arrival_date   DateTime
+  flight_id      Int             @unique
+  plane_id       Int
+  terminal_id    Int
+  pilot_cpf      String
+  copilot_cpf    String
+  terminal       Terminal        @relation("terminal", fields: [terminal_id], references: [id])
+  tickets        Ticket[]
+  fly_attendants Fly_Attendant[]
+  flight         Flight          @relation(fields: [flight_id], references: [id])
+  copilot        Pilot           @relation("copilot", fields: [copilot_cpf], references: [cpf], onUpdate: NoAction)
+  pilot          Pilot           @relation("pilot", fields: [pilot_cpf], references: [cpf], onUpdate: NoAction)
+  plane          Plane           @relation("seletedPlane", fields: [plane_id], references: [id])
+}
+
+model Ticket {
+  id                 Int              @id @default(autoincrement())
+  price              Decimal
+  passenger_id       String
+  flight_instance    Flight_Instance? @relation(fields: [flight_instance_id], references: [id])
+  flight_instance_id Int?
+  user               User             @relation("traveller", fields: [passenger_id], references: [id])
+}
+
+model Company {
+  cnpj             String   @id
+  name             String   @unique
+  contact          String
+  number_of_planes Int      @default(0)
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  planes           Plane[]
+}
+
+model Plane {
+  id               Int               @id @default(autoincrement())
+  capacity         Int
+  model            String
+  manufacture_date DateTime?
+  company_cnpj     String
+  Flight_Instance  Flight_Instance[] @relation("seletedPlane")
+  company          Company           @relation(fields: [company_cnpj], references: [cnpj])
+}

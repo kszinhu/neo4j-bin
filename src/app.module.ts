@@ -4,6 +4,8 @@ import { OGMModule } from './config/database/ogm-neo4j/ogm.module';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { Neo4jConfig } from './config/database/ogm-neo4j/ogm.interface';
+import { UsersController } from 'models/users/users.controller';
+import { UsersService } from 'models/users/users.service';
 
 @Module({
   imports: [
@@ -22,7 +24,7 @@ import { Neo4jConfig } from './config/database/ogm-neo4j/ogm.interface';
       }),
     }),
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  controllers: [AppController, UsersController],
+  providers: [AppService, UsersService],
 })
 export class AppModule {}

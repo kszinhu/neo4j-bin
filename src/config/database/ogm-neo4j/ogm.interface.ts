@@ -3,5 +3,5 @@ export interface Neo4jConfig {
   database: string;
   username: string;
   password: string;
-  config: object;
+  config: Record<string, any>;
 }

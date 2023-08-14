@@ -4,7 +4,7 @@ import { OGMService } from './ogm.service';
 import { NEO4J_CONFIG, NEO4J_DRIVER } from './ogm.constants';
 import { Neo4jConfig } from './ogm.interface';
 
-import OGM from 'ogm-neo4j';
+import { OGM } from 'ogm-neo4j/app';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({})
@@ -23,18 +23,12 @@ export class OGMModule {
           inject: [NEO4J_CONFIG],
           useFactory: async ({
             connectionString,
-            database,
             password,
             username,
-            ...additionalConfig
+            database: _database,
+            config,
           }: Neo4jConfig) =>
-            new OGM(
-              connectionString,
-              database,
-              username,
-              password,
-              additionalConfig,
-            ),
+            new OGM(connectionString, username, password, config),
         },
         OGMService,
       ],
@@ -58,18 +52,12 @@ export class OGMModule {
           inject: [NEO4J_CONFIG],
           useFactory: async ({
             connectionString,
-            database,
             password,
             username,
-            ...additionalConfig
+            database: _database,
+            config,
           }: Neo4jConfig) =>
-            new OGM(
-              connectionString,
-              database,
-              username,
-              password,
-              additionalConfig,
-            ),
+            new OGM(connectionString, username, password, config),
         },
         OGMService,
       ],

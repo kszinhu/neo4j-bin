@@ -1,17 +1,14 @@
 import { Inject, Injectable } from '@nestjs/common';
 
-import OGM from 'ogm-neo4j';
+import { OGM } from 'ogm-neo4j/app';
 import { NEO4J_CONFIG } from './ogm.constants';
+import { Model } from 'ogm-neo4j/models';
 
 @Injectable()
 export class OGMService {
-  _ogm: OGM;
+  ogm: OGM;
 
   constructor(@Inject(NEO4J_CONFIG) private readonly config) {
-    this._ogm = OGM.fromEnv();
-  }
-
-  getOGM(): OGM {
-    return this._ogm;
+    this.ogm = OGM.fromEnv();
   }
 }

@@ -46,7 +46,7 @@ services:
       - stack.env
 
 volumes:
-  # postgres-data:
+  postgres-data:
   neo4j-data:
   neo4j-logs:
   neo4j-import:

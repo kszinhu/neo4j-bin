@@ -8,6 +8,7 @@
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "allowJs": true,
+    "skipLibCheck": true,
     "target": "ES2022",
     "sourceMap": true,
     "outDir": "./dist",
@@ -16,7 +17,7 @@
     "paths": {
       "@core/*": ["./src/core/*"],
       "@modules/*": ["./src/modules/*"],
-      "@src/*": ["./src/*"],
+      "@src/*": ["./src/*"]
     }
   },
   "include": ["src/**/*"],

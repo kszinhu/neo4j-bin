@@ -1,4 +1,4 @@
-import { Model } from 'ogm-neo4j/models';
+import { Model } from 'ogm-neo4j/models/index';
 import type { ProvidedPropertiesFactory } from 'ogm-neo4j/types/models';
 
 export interface User {

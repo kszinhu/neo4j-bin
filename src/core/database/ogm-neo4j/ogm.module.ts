@@ -4,7 +4,7 @@ import { OGMService } from './ogm.service';
 import { NEO4J_CONFIG, NEO4J_DRIVER } from './ogm.constants';
 import { Neo4jConfig } from './ogm.interface';
 
-import { OGM } from 'ogm-neo4j/app';
+import { OGM } from 'ogm-neo4j/app/index';
 import { ConfigModule } from '@nestjs/config';
 
 @Module({})

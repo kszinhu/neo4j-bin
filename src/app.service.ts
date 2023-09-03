@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { OGM } from 'ogm-neo4j/app';
+import { OGM } from 'ogm-neo4j/app/index';
 
 @Injectable()
 export class AppService {

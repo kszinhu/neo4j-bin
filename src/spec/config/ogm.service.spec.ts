@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { OGMService } from '../../config/database/ogm-neo4j/ogm.service';
+import { OGMService } from '../../core/database/ogm-neo4j/ogm.service';
 
 describe('OGMService', () => {
   let service: OGMService;

@@ -1,11 +1,12 @@
 {
-  "name": "airport-api",
+  "name": "e_commerce-behavioral-analysis-api",
   "private": true,
   "version": "0.0.1",
   "description": "Example of real application with NestJS using OGM Neo4j",
   "license": "MIT",
   "scripts": {
     "build": "nest build",
+    "command": "TS_NODE_PROJECT=./tsconfig.json ts-node -r tsconfig-paths/register ./src/main-cli.ts",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "start": "nest start",
     "start:dev": "nest start --watch",
@@ -23,6 +24,8 @@
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.4.0",
     "@nestjs/platform-express": "^9.0.0",
+    "csv-parse": "^5.4.0",
+    "nest-commander": "^3.11.1",
     "ogm-neo4j": "file:../ogm-neo4j/dist",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5"

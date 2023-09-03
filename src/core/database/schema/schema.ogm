@@ -1,0 +1,29 @@
+Node User {
+  id:          Int
+  username:    String
+  password:    String
+  name:        String
+  email:       String
+  sex:         Enum { "M", "F", "X" }
+  birth_at:    Date
+}
+
+Node Product {
+  id:     Int
+  brand:  String?
+  price:  Decimal
+}
+
+Node Category {
+  id:    Int
+  code:  String
+}
+
+Relationship Event {
+  time:          Date
+  type:          Enum { "view", "cart", "remove_from_cart", "purchase" }
+  user_session:  String
+  user:          User
+  product:       Product
+}
+

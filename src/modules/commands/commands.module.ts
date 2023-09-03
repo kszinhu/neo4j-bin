@@ -1,10 +1,8 @@
 import { Module } from '@nestjs/common';
+import { SeedCommand } from './seed';
+import { Neo4jConfig } from 'core/database/ogm-neo4j/ogm.interface';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { OGMModule } from './core/database/ogm-neo4j/ogm.module';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { Neo4jConfig } from './core/database/ogm-neo4j/ogm.interface';
-import { UsersModule } from 'modules/models/users/users.module';
+import { OGMModule } from 'core/database/ogm-neo4j/ogm.module';
 
 @Module({
   imports: [
@@ -22,9 +20,7 @@ import { UsersModule } from 'modules/models/users/users.module';
         config: configService.get<object>('NEO4J_CONFIG'),
       }),
     }),
-    UsersModule,
   ],
-  controllers: [AppController],
-  providers: [AppService],
+  providers: [SeedCommand],
 })
-export class AppModule {}
+export class CommandsModule {}

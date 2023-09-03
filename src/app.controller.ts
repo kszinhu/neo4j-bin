@@ -1,7 +1,7 @@
 import { Controller, Get } from '@nestjs/common';
 import { OGM } from 'ogm-neo4j/app';
 
-import { OGMService } from './config/database/ogm-neo4j/ogm.service';
+import { OGMService } from './core/database/ogm-neo4j/ogm.service';
 import { AppService } from './app.service';
 
 @Controller()

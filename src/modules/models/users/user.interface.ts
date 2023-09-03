@@ -3,18 +3,12 @@ import type { ProvidedPropertiesFactory } from 'ogm-neo4j/types/models';
 
 export interface User {
   id: string;
-  cpf: string;
-  email: string;
   username: string;
   password: string;
   name: string;
-  rg?: string;
+  email: string;
   sex: 'M' | 'F' | 'X';
   birth_at: Date;
-  address: string;
-  tickets: any[];
-  created_at: Date;
-  updated_at?: Date;
 }
 
 export type UserPropertiesKeys = keyof User & string;

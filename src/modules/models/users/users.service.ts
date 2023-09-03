@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { OGMService } from 'config/database/ogm-neo4j/ogm.service';
+import { OGMService } from 'core/database/ogm-neo4j/ogm.service';
 
 import type {
   UserModel,

@@ -27,9 +27,9 @@ services:
       # BOLT (Neo4j binary protocol)
       - "0.0.0.0:${NEO4J_BOLT_PORT}:7687"
     volumes:
-      - ./data:/data
-      - ./logs:/logs
-      - ./import:/import
+      - neo4j-data:/data
+      - neo4j-logs:/logs
+      - neo4j-import:/import
     env_file:
       - stack.env
     networks:
@@ -40,11 +40,18 @@ services:
     container_name: kszinhu.ecommerce-analysis.database.postgres
     restart: unless-stopped
     volumes:
-      - postgres_data:/var/lib/postgresql/data/
+      - postgres-data:/var/lib/postgresql/data
     networks:
       - kszinhu
     env_file:
       - stack.env
+
+volumes:
+  postgres-data:
+  neo4j-data:
+  neo4j-logs:
+  neo4j-import:
+
 
 networks:
   kszinhu:

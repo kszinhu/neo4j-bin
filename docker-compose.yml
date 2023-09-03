@@ -24,7 +24,7 @@ services:
     image: neo4j:5.11
     restart: unless-stopped
     ports:
-      - "0.0.0.0:${NEO4J_BOLT_PORT}:7687"
+      - "0.0.0.0:${DATABASE_GRAPH_PORT}:7687"
     volumes:
       - neo4j-data:/data
       - neo4j-logs:/logs

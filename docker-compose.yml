@@ -26,11 +26,11 @@ services:
     ports:
       - "0.0.0.0:${DATABASE_GRAPH_PORT}:7687"
     volumes:
-      - conf-neo4j:/conf/neo4j.conf
+      - conf-neo4j:/conf
       - data-neo4j:/var/lib/neo4j/data
       - logs-neo4j:/var/lib/neo4j/logs
       - import-neo4j:/var/lib/neo4j/import
-      - conf-extend-neo4j:/var/lib/neo4j/conf/neo4j.conf
+      - conf-extend-neo4j:/var/lib/neo4j/conf
     env_file:
       - stack.env
     networks:

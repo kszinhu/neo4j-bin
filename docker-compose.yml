@@ -30,6 +30,7 @@ services:
       - data-neo4j:/var/lib/neo4j/data
       - logs-neo4j:/var/lib/neo4j/logs
       - import-neo4j:/var/lib/neo4j/import
+      - conf-extend-neo4j:/var/lib/neo4j/conf/neo4j.conf
     env_file:
       - stack.env
     networks:
@@ -40,7 +41,6 @@ services:
       - EXTENDED_CONF
       - NEO4J_EDITION
       - NEO4J_initial_server_mode__constraint=PRIMARY
-    user: ${USER_ID}:${GROUP_ID}
 
   database_postgres:
     image: postgres
@@ -59,6 +59,7 @@ volumes:
   logs-neo4j:
   import-neo4j:
   conf-neo4j:
+  conf-extend-neo4j:
 
 
 networks:

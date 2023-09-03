@@ -1,0 +1,26 @@
+version: "3.8"
+
+services:
+  api_neo4j:
+    container_name: kszinhu.ecommerce_analysis_api_neo4j
+    image: ghcr.io/kszinhu/neo4j-bin:dbms-neo4j
+    restart: unless-stopped
+
+  database_neo4j:
+    container_name: kszinhu.ecommerce_analysis_database_neo4j
+    image: neo4j:latest
+    restart: unless-stopped
+    ports:
+      # HTTP (neo4j browser)
+      - "7474:7474"
+      # Bolt (neo4j driver)
+      - "7687:7687"
+    volumes:
+      - data:/data
+      - logs:/logs
+      - import:/import
+
+volumes:
+  data:
+  logs:
+  import:

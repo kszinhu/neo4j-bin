@@ -3,28 +3,27 @@ version: "3.8"
 services:
   api_neo4j:
     container_name: kszinhu.ecommerce-analysis.api.neo4j
-    image: ghcr.io/kszinhu/e-commerce-analysis:DBMS/neo4j
+    image: ghcr.io/kszinhu/neo4j-bin:dbms-neo4j
     restart: unless-stopped
     networks:
       - kszinhu
     env_file:
       - stack.env
 
-  api_postgres:
-    container_name: kszinhu.ecommerce-analysis.api.postgres
-    image: ghcr.io/kszinhu/e-commerce-analysis:DBMS/postgres
-    restart: unless-stopped
-    networks:
-      - kszinhu
-    env_file:
-      - stack.env
+  # api_postgres:
+  #   container_name: kszinhu.ecommerce-analysis.api.postgres
+  #   image: ghcr.io/kszinhu/neo4j-bin:dbms-postgres
+  #   restart: unless-stopped
+  #   networks:
+  #     - kszinhu
+  #   env_file:
+  #     - stack.env
 
   database_neo4j:
     container_name: kszinhu.ecommerce-analysis.database.neo4j
     image: neo4j:5.11
     restart: unless-stopped
     ports:
-      # BOLT (Neo4j binary protocol)
       - "0.0.0.0:${NEO4J_BOLT_PORT}:7687"
     volumes:
       - neo4j-data:/data
@@ -47,7 +46,7 @@ services:
       - stack.env
 
 volumes:
-  postgres-data:
+  # postgres-data:
   neo4j-data:
   neo4j-logs:
   neo4j-import:

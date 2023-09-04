@@ -10,56 +10,31 @@ services:
     env_file:
       - stack.env
 
-  # api_postgres:
-  #   container_name: kszinhu.ecommerce-analysis.api.postgres
-  #   image: ghcr.io/kszinhu/neo4j-bin:dbms-postgres
-  #   restart: unless-stopped
-  #   networks:
-  #     - kszinhu
-  #   env_file:
-  #     - stack.env
-
   database_neo4j:
     container_name: kszinhu.ecommerce-analysis.database.neo4j
-    image: neo4j:5.11
+    image: ${DATABASE_NEO4J_DOCKER_IMAGE}
     restart: unless-stopped
     ports:
-      - "0.0.0.0:${DATABASE_GRAPH_PORT}:7687"
+      - "0.0.0.0:${DATABASE_NEO4J_PORT}:7687"
     volumes:
-      - conf-neo4j:/conf
-      - data-neo4j:/var/lib/neo4j/data
-      - logs-neo4j:/var/lib/neo4j/logs
-      - import-neo4j:/var/lib/neo4j/import
-      - conf-extend-neo4j:/var/lib/neo4j/conf
+      - neo4j-data:/var/lib/neo4j/data
+      - neo4j-logs:/var/lib/neo4j/logs
+      - neo4j-import:/var/lib/neo4j/import
     env_file:
       - stack.env
     networks:
       - kszinhu
     environment:
       - NEO4J_ACCEPT_LICENSE_AGREEMENT
-      - NEO4J_AUTH
+      - NEO4J_AUTH=neo4j/aaabbbcc123
       - EXTENDED_CONF
       - NEO4J_EDITION
       - NEO4J_initial_server_mode__constraint=PRIMARY
 
-  database_postgres:
-    image: postgres
-    container_name: kszinhu.ecommerce-analysis.database.postgres
-    restart: unless-stopped
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    networks:
-      - kszinhu
-    env_file:
-      - stack.env
-
 volumes:
-  postgres-data:
-  data-neo4j:
-  logs-neo4j:
-  import-neo4j:
-  conf-neo4j:
-  conf-extend-neo4j:
+  neo4j-data:
+  neo4j-logs:
+  neo4j-import:
 
 
 networks:

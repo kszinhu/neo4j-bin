@@ -30,6 +30,8 @@ services:
       - EXTENDED_CONF
       - NEO4J_EDITION
       - NEO4J_initial_server_mode__constraint=PRIMARY
+      - NEO4J_server_bolt_thread__pool__min__size
+      - NEO4J_server_bolt_thread__pool__max__size
 
 volumes:
   neo4j-data:

@@ -1,0 +1,29 @@
+_id: req_3a171df75e284961a25202cce9a32065
+type: Request
+parentId: fld_08273eac2c5d46b0884d965e26241cc8
+modified: 1695069082844
+created: 1695069072448
+url: "{{ _.baseURL }}/products"
+name: Create
+description: ""
+method: POST
+body:
+  mimeType: application/json
+  text: |-
+    {
+    }
+parameters: []
+headers:
+  - name: Content-Type
+    value: application/json
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1693901750501
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

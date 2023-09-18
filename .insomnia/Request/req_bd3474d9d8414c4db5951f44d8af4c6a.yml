@@ -1,0 +1,23 @@
+_id: req_bd3474d9d8414c4db5951f44d8af4c6a
+type: Request
+parentId: fld_e7a0458d878b4dd6af7a7b189400637b
+modified: 1695069374782
+created: 1695069365467
+url: "{{ _.baseURL }}/events/1003461"
+name: Find by ID
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1694485288630
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

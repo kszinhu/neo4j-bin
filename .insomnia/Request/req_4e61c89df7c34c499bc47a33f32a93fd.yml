@@ -1,0 +1,23 @@
+_id: req_4e61c89df7c34c499bc47a33f32a93fd
+type: Request
+parentId: fld_26cd73a6be2c4483a3009c3f5f88fbc1
+modified: 1695069475606
+created: 1695069454560
+url: "{{ _.baseURL }}/categories/"
+name: Delete
+description: ""
+method: DELETE
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1693318212372
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

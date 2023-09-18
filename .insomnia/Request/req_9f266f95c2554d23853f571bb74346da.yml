@@ -1,0 +1,26 @@
+_id: req_9f266f95c2554d23853f571bb74346da
+type: Request
+parentId: fld_b290433d49654700879fd7c1f61499c6
+modified: 1695069596139
+created: 1695069489872
+url: "{{ _.baseURL }}/users"
+name: Models Requests
+description: |-
+  ## Description
+
+  This folder contains all models requests
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1695068826759
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

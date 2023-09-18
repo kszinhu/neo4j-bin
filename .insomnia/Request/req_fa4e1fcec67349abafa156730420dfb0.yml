@@ -1,0 +1,23 @@
+_id: req_fa4e1fcec67349abafa156730420dfb0
+type: Request
+parentId: fld_26cd73a6be2c4483a3009c3f5f88fbc1
+modified: 1695069470504
+created: 1695069454552
+url: "{{ _.baseURL }}/categories"
+name: All
+description: ""
+method: GET
+body: {}
+parameters: []
+headers:
+  - name: User-Agent
+    value: Insomnia/2023.5.7
+authentication: {}
+metaSortKey: -1695068826759
+isPrivate: false
+settingStoreCookies: true
+settingSendCookies: true
+settingDisableRenderRequestBody: false
+settingEncodeUrl: true
+settingRebuildPath: true
+settingFollowRedirects: global

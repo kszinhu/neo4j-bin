@@ -1,30 +1,39 @@
-import { Module } from '@nestjs/common';
+import { MiddlewareConsumer, Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { OGMModule } from './core/database/ogm-neo4j/ogm.module';
-import { AppController } from './app.controller';
+
+import { OGMModule } from 'core/database/ogm-neo4j/ogm.module';
+import { Neo4jConfig } from 'core/database/ogm-neo4j/ogm.interface';
+import { AppLoggerMiddleware } from 'core/middleware/logger';
+import Setup from 'core/config/app/configuration';
+import { Modules } from 'modules';
 import { AppService } from './app.service';
-import { Neo4jConfig } from './core/database/ogm-neo4j/ogm.interface';
-import { UsersModule } from 'modules/models/users/users.module';
+import { AppController } from 'app.controller';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true }),
+    ConfigModule.forRoot({ isGlobal: true, load: [Setup] }),
     OGMModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (
         configService: ConfigService,
       ): Promise<Neo4jConfig> => ({
-        connectionString: configService.get<string>('NEO4J_CONNECTION_STRING'),
-        database: configService.get<string>('NEO4J_DATABASE'),
-        password: configService.get<string>('NEO4J_PASSWORD'),
-        username: configService.get<string>('NEO4J_USERNAME'),
-        config: configService.get<object>('NEO4J_CONFIG'),
+        connectionString: configService.get<string>(
+          'database.connectionString',
+        ),
+        database: configService.get<string>('database.name'),
+        password: configService.get<string>('database.user.password'),
+        username: configService.get<string>('database.user.username'),
+        config: configService.get<object>('database.config'),
       }),
     }),
-    UsersModule,
+    ...Modules,
   ],
   controllers: [AppController],
   providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  configure(consumer: MiddlewareConsumer): void {
+    consumer.apply(AppLoggerMiddleware).forRoutes('*');
+  }
+}

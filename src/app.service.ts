@@ -1,23 +1,24 @@
-import { Injectable } from '@nestjs/common';
-import { OGM } from 'ogm-neo4j/app/index';
+import { HttpStatus, Injectable, Logger } from '@nestjs/common';
+import { OGMService } from 'core/database/ogm-neo4j/ogm.service';
 
 @Injectable()
 export class AppService {
-  async getOGMHello(OGM: OGM): Promise<string> {
-    const session = OGM.readSession();
+  constructor(private readonly ogmService: OGMService) {}
 
-    const amountNodes: number = await session
-      .run('MATCH (n) RETURN count(n) AS count')
-      .then((result) => {
-        return result.records[0].get('count');
-      })
-      .catch((error) => {
-        console.error(error);
-      });
+  async ogmHealthCheck(): Promise<number> {
+    const session = this.ogmService.app.readSession();
 
-    return `There are ${amountNodes} nodes in the database`;
+    return await session
+      .run('MATCH (n) RETURN count(*) as amount')
+      .then((result) => result.records[0].get('amount'))
+      .catch((error) => ({
+        message: error,
+        code: HttpStatus.SERVICE_UNAVAILABLE,
+      }));
   }
-  getHello(): string {
-    return 'Hello World!';
-  }
+
+  // TODO: ADD METHOD TO GET INFO ABOUT THE SYSTEM (CPU, RAM, ETC)
+  // healthCheck(): string {
+  //   return 'OK';
+  // }
 }

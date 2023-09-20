@@ -50,3 +50,21 @@ $ neo4j-admin import --database eCommerce_analysis
 ```bash
 $ npm run command seed -c <csv_files.csv...>
 ```
+
+### API
+
+Using a [JSON-API](https://jsonapi.org) standard to return data
+
+is possible to use the following query params:
+
+- page (default: 1) - number of page
+- limit (default: 25) - number of items per page
+- sort (default: id) - sort by field
+- order (default: ASC) - order by field
+- fields (default: all) - fields to return (comma separated)
+- filter (default: all) - filter by field (comma separated)
+- include (default: none) - include relationships (comma separated)
+
+### TODO
+
+- [ ] Create a swagger documentation

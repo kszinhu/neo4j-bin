@@ -2,13 +2,13 @@ version: "3.8"
 
 services:
   api_neo4j:
-    container_name: kszinhu.ecommerce_analysis_api_neo4j
+    container_name: api.neo4j
     image: ghcr.io/kszinhu/neo4j-bin:dbms-neo4j
     restart: unless-stopped
 
   database_neo4j:
-    container_name: kszinhu.ecommerce_analysis_database_neo4j
-    image: neo4j:latest
+    container_name: database.neo4j
+    image: neo4j:5.11
     restart: unless-stopped
     ports:
       # HTTP (neo4j browser)
@@ -19,6 +19,12 @@ services:
       - data:/data
       - logs:/logs
       - import:/import
+    environment:
+      - EXTENDED_CONF=yes
+      - NEO4J_EDITION=docker_compose
+      - NEO4J_ACCEPT_LICENSE_AGREEMENT=yes
+      - NEO4J_EDITION=docker_compose
+      - NEO4J_AUTH=neo4j/password123
 
 volumes:
   data:

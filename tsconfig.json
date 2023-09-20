@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "module": "CommonJS",
+    "moduleResolution": "node",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -14,12 +15,7 @@
     "outDir": "./dist",
     "baseUrl": "./src",
     "rootDir": "./src",
-    "paths": {
-      "@core/*": ["./src/core/*"],
-      "@modules/*": ["./src/modules/*"],
-      "@src/*": ["./src/*"]
-    }
+    "typeRoots": ["node_modules/@types", "types"]
   },
-  "include": ["src/**/*"],
-  "exclude": ["./node_modules", "./test/**/*", "./dist"]
+  "exclude": ["node_modules", "dist"]
 }

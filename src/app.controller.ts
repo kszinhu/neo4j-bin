@@ -1,27 +1,26 @@
-import { Controller, Get } from '@nestjs/common';
-import { OGM } from 'ogm-neo4j/app/index';
+import { Controller, Get, HttpStatus, Res } from '@nestjs/common';
+import { Response } from 'express';
 
-import { OGMService } from './core/database/ogm-neo4j/ogm.service';
 import { AppService } from './app.service';
+import { JsonData } from 'core/concerns/base.controller';
+import { ServiceException } from 'core/concerns/base.service';
 
 @Controller()
 export class AppController {
-  #ogm: OGM;
+  constructor(private readonly appService: AppService) {}
 
-  constructor(
-    private readonly appService: AppService,
-    private readonly ogmService: OGMService,
-  ) {
-    this.#ogm = ogmService.ogm;
+  @Get('health')
+  healthCheck(@Res() response: Response): JsonData {
+    return response.status(HttpStatus.OK).json({ message: 'OK' });
   }
 
-  @Get()
-  getHello(): string {
-    return this.appService.getHello();
-  }
-
-  @Get('ogm')
-  async getOGM(): Promise<string> {
-    return this.appService.getOGMHello(this.#ogm);
+  @Get('database/health')
+  async database(@Res() response: Response): Promise<JsonData> {
+    return this.appService
+      .ogmHealthCheck()
+      .then((amount) => response.status(HttpStatus.OK).json({ nodes: amount }))
+      .catch((error: ServiceException) =>
+        response.status(error.code).json(error.cause),
+      );
   }
 }

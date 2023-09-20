@@ -24,9 +24,9 @@
     "@nestjs/config": "^2.3.1",
     "@nestjs/core": "^9.4.0",
     "@nestjs/platform-express": "^9.0.0",
+    "@nestjs/platform-fastify": "^10.2.5",
     "csv-parse": "^5.4.0",
     "nest-commander": "^3.11.1",
-    "ogm-neo4j": "github:kszinhu/ogm-neo4j#feat/schema-install",
     "reflect-metadata": "^0.1.13",
     "rxjs": "^7.5.5"
   },

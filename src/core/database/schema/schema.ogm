@@ -1,5 +1,5 @@
 Node User {
-  id:          Int
+  id:          Int                    @identifier(auto: true)
   username:    String
   password:    String
   name:        String
@@ -9,14 +9,14 @@ Node User {
 }
 
 Node Product {
-  id:     Int
+  id:     Int     @identifier(auto: true)
   brand:  String?
   price:  Decimal
 }
 
 Node Category {
-  id:    Int
-  code:  String
+  id:    Int     @identifier(auto: true)
+  code:  String?
 }
 
 Relationship Event {

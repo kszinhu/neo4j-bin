@@ -1,6 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing';
 import { AppController } from '../app.controller';
 import { AppService } from '../app.service';
+import { response } from 'express';
 
 describe('AppController', () => {
   let app: TestingModule;
@@ -12,10 +13,11 @@ describe('AppController', () => {
     }).compile();
   });
 
-  describe('getHello', () => {
-    it('should return "Hello World!"', () => {
+  describe('#healthCheck', () => {
+    it('should return "OK"', () => {
       const appController = app.get(AppController);
-      expect(appController.getHello()).toBe('Hello World!');
+
+      expect(appController.healthCheck(response)).toBe({ message: 'OK' });
     });
   });
 });

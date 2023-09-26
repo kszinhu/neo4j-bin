@@ -1,11 +1,5 @@
 Node User {
   id:          Int                    @identifier(auto: true)
-  username:    String
-  password:    String
-  name:        String
-  email:       String
-  sex:         Enum { "M", "F", "X" }
-  birth_at:    Date
 }
 
 Node Product {

@@ -1,5 +1,5 @@
 import { Controller, Get, HttpStatus, Res } from '@nestjs/common';
-import { Response } from 'express';
+import { FastifyReply as Response } from 'fastify';
 
 import { AppService } from './app.service';
 import { JsonData } from 'core/concerns/base.controller';
@@ -11,16 +11,27 @@ export class AppController {
 
   @Get('health')
   healthCheck(@Res() response: Response): JsonData {
-    return response.status(HttpStatus.OK).json({ message: 'OK' });
+    return response
+      .header('Content-Type', 'application/json')
+      .status(HttpStatus.OK)
+      .send({ status: 'ok', host: this.appService.hostInfo() });
   }
 
   @Get('database/health')
   async database(@Res() response: Response): Promise<JsonData> {
     return this.appService
       .ogmHealthCheck()
-      .then((amount) => response.status(HttpStatus.OK).json({ nodes: amount }))
+      .then((databaseInfo) =>
+        response
+          .header('Content-Type', 'application/json')
+          .status(HttpStatus.OK)
+          .send(databaseInfo),
+      )
       .catch((error: ServiceException) =>
-        response.status(error.code).json(error.cause),
+        response
+          .header('Content-Type', 'application/json')
+          .status(error.code)
+          .send({ error }),
       );
   }
 }

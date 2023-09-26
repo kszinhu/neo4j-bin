@@ -1,10 +1,10 @@
 import { Controller } from '@nestjs/common';
 import { Product } from './product.interface';
-import { BaseController } from 'core/concerns/base.controller';
+import { BaseModelController } from 'core/concerns/model/baseModel.controller';
 import { ProductsService } from './product.service';
 
 @Controller('products')
-export class ProductsController extends BaseController<Product, 'id'> {
+export class ProductsController extends BaseModelController<Product, 'id'> {
   constructor(private readonly productService: ProductsService) {
     super(productService);
   }

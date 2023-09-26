@@ -24,17 +24,17 @@ import {
   OGMError,
 } from 'ogm-neo4j/errors';
 
-import { IBaseService } from './IBase.service';
-import { ServiceException } from './base.service';
+import { IBaseModelService } from './IBaseModel.service';
+import { ServiceException } from './baseModel.service';
 
 export type JsonData = Record<string, any>;
 
-export class BaseController<
+export class BaseModelController<
   Schema extends Record<string, any>,
   Identifier extends keyof Schema & string,
 > {
   constructor(
-    private readonly service: IBaseService<
+    private readonly service: IBaseModelService<
       Model<Schema, SchemaProperties<keyof Schema & string, Identifier>>
     >,
   ) {}

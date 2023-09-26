@@ -1,9 +1,4 @@
-import {
-  BadGatewayException,
-  HttpStatus,
-  Inject,
-  Injectable,
-} from '@nestjs/common';
+import { BadGatewayException, HttpStatus } from '@nestjs/common';
 import { Model } from 'ogm-neo4j/models';
 
 import { OGMService } from 'core/database/ogm-neo4j/ogm.service';
@@ -12,16 +7,18 @@ import {
   CreateResponse,
   DeleteResponse,
   GetResponse,
-  IBaseService,
-} from './IBase.service';
-import { JsonData } from './base.controller';
+  IBaseModelService,
+} from './IBaseModel.service';
+import { JsonData } from './baseModel.controller';
 
 export interface ServiceException {
   code: HttpStatus;
   cause: JsonData;
 }
 
-export class BaseService<T extends Model<any, any>> implements IBaseService<T> {
+export class BaseModelService<T extends Model<any, any>>
+  implements IBaseModelService<T>
+{
   readonly name: string;
   readonly #entityRepository: T;
 

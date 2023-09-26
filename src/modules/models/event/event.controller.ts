@@ -1,10 +1,10 @@
 import { Controller } from '@nestjs/common';
 import { Event } from './event.interface';
-import { BaseController } from 'core/concerns/base.controller';
+import { BaseModelController } from 'core/concerns/model/baseModel.controller';
 import { EventsService } from './event.service';
 
 @Controller('events')
-export class EventsController extends BaseController<Event, 'time'> {
+export class EventsController extends BaseModelController<Event, 'time'> {
   constructor(private readonly eventService: EventsService) {
     super(eventService);
   }

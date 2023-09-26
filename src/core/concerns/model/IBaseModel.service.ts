@@ -13,7 +13,7 @@ export type DeleteResponse<M extends Model<any, any>> = Promise<
   Awaited<ReturnType<M['delete']>>
 >;
 
-export interface IBaseService<M extends Model<any, any>> {
+export interface IBaseModelService<M extends Model<any, any>> {
   readonly name: string;
   getAll(
     properties?: Parameters<M['all']>['0'],

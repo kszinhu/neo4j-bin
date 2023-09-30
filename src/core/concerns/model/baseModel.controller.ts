@@ -10,19 +10,6 @@ import {
   NotImplementedException,
 } from '@nestjs/common';
 import { FastifyReply as Response } from 'fastify';
-import {
-  ModelIdentifier,
-  ProvidedPropertiesFactory as SchemaProperties,
-} from 'ogm-neo4j/types/models';
-import { Model } from 'ogm-neo4j/models';
-import {
-  EntityError,
-  ModelError,
-  TransactionError,
-  ValidationError,
-  SchemaError,
-  OGMError,
-} from 'ogm-neo4j/errors';
 
 import { IBaseModelService } from './IBaseModel.service';
 import { ServiceException } from './baseModel.service';
@@ -30,43 +17,12 @@ import { ServiceException } from './baseModel.service';
 export type JsonData = Record<string, any>;
 
 export class BaseModelController<
-  Schema extends Record<string, any>,
-  Identifier extends keyof Schema & string,
+  T extends Record<string, any>,
+  I extends keyof T,
 > {
-  constructor(
-    private readonly service: IBaseModelService<
-      Model<Schema, SchemaProperties<keyof Schema & string, Identifier>>
-    >,
-  ) {}
+  constructor(private readonly service: IBaseModelService<T, I>) {}
 
-  #handleError(error: OGMError): ServiceException {
-    if (error instanceof EntityError) {
-      return {
-        code: HttpStatus.FAILED_DEPENDENCY,
-        cause: { ...error, message: error.message },
-      };
-    } else if (error instanceof TransactionError) {
-      return {
-        code: HttpStatus.INTERNAL_SERVER_ERROR,
-        cause: { ...error, message: error.message },
-      };
-    } else if (error instanceof ModelError) {
-      return {
-        code: HttpStatus.BAD_REQUEST,
-        cause: { ...error, message: error.message },
-      };
-    } else if (error instanceof ValidationError) {
-      return {
-        code: HttpStatus.BAD_REQUEST,
-        cause: { ...error, message: error.message },
-      };
-    } else if (error instanceof SchemaError) {
-      return {
-        code: HttpStatus.BAD_REQUEST,
-        cause: { ...error, message: error.message },
-      };
-    }
-
+  #handleError(error: any): ServiceException {
     return { code: HttpStatus.INTERNAL_SERVER_ERROR, cause: error };
   }
 
@@ -78,7 +34,7 @@ export class BaseModelController<
         response
           .header('Content-Type', 'application/json')
           .status(HttpStatus.OK)
-          .send(Object.fromEntries(entities)),
+          .send(entities),
       )
       .catch((exception) => {
         const { code, cause: why } = this.#handleError(exception);
@@ -93,10 +49,7 @@ export class BaseModelController<
   @Get(':id')
   async findById(
     @Param('id')
-    id: ModelIdentifier<
-      SchemaProperties<keyof Schema & string, Identifier>,
-      Schema
-    >,
+    id: T[I],
     @Res() response: Response,
   ): Promise<JsonData> {
     return this.service
@@ -119,7 +72,7 @@ export class BaseModelController<
 
   @Post()
   async create(
-    @Body() entity: Schema,
+    @Body() entity: T,
     @Res() response: Response,
   ): Promise<JsonData> {
     return this.service
@@ -138,10 +91,7 @@ export class BaseModelController<
   @Delete(':id')
   async delete(
     @Param('id')
-    id: ModelIdentifier<
-      SchemaProperties<keyof Schema & string, Identifier>,
-      Schema
-    >,
+    id: T[I],
     @Res() response: Response,
   ): Promise<JsonData> {
     return this.service
@@ -158,7 +108,22 @@ export class BaseModelController<
   }
 
   @Put()
-  async update(@Body() entity: Schema): Promise<JsonData> {
-    return NotImplementedException;
+  async update(
+    @Param('id')
+    id: T[I],
+    @Body() data: Partial<T>,
+    @Res() response: Response,
+  ) {
+    return this.service
+      .update(id, data)
+      .then((entity) => response.status(HttpStatus.OK).send(entity))
+      .catch((exception) => {
+        const { code, cause: why } = this.#handleError(exception);
+
+        return response
+          .header('Content-Type', 'application/json')
+          .status(code)
+          .send(why);
+      });
   }
 }

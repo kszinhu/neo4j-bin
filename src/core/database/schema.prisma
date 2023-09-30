@@ -1,0 +1,46 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_POSTGRES_URL")
+}
+
+model User {
+  id     Int     @id @default(autoincrement())
+  events Event[]
+}
+
+model Product {
+  id          Int      @id @default(autoincrement())
+  brand       String?
+  price       Decimal
+  events      Event[]
+  category_id String
+  category    Category @relation(fields: [category_id], references: [id])
+}
+
+model Category {
+  id      String    @id
+  code    String?
+  Product Product[]
+}
+
+enum EventKind {
+  car
+  view
+  purchase
+  remove_from_cart
+}
+
+model Event {
+  id           Int       @id @default(autoincrement())
+  time         DateTime  @db.Timestamptz()
+  kind         EventKind
+  user_session String
+  user_id      Int
+  product_id   Int
+  user         User      @relation(fields: [user_id], references: [id])
+  product      Product   @relation(fields: [product_id], references: [id])
+}

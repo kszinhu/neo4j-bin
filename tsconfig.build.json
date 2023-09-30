@@ -2,6 +2,7 @@
   "compilerOptions": {
     "module": "CommonJS",
     "moduleResolution": "node",
+    "target": "ES2022",
     "declaration": true,
     "removeComments": true,
     "emitDecoratorMetadata": true,
@@ -10,7 +11,7 @@
     "esModuleInterop": true,
     "allowJs": true,
     "skipLibCheck": true,
-    "target": "ES2022",
+    "strict": true,
     "sourceMap": true,
     "outDir": "./dist",
     "baseUrl": "./src",

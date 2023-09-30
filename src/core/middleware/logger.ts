@@ -23,7 +23,7 @@ export class AppLoggerMiddleware implements NestMiddleware {
         PATCH: `${method} ${url} ${statusCode} ${contentLength} - ${userAgent} ${ip}`,
         PUT: `${method} ${url} ${statusCode} ${contentLength} - ${userAgent} ${ip}`,
         OPTIONS: '',
-      }[method];
+      }[method as 'GET' | 'DELETE' | 'POST' | 'PATCH' | 'PUT' | 'OPTIONS'];
       isError ? this.logger.error(message) : this.logger.log(message);
     });
 

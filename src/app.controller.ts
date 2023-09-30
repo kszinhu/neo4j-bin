@@ -16,22 +16,4 @@ export class AppController {
       .status(HttpStatus.OK)
       .send({ status: 'ok', host: this.appService.hostInfo() });
   }
-
-  @Get('database/health')
-  async database(@Res() response: Response): Promise<JsonData> {
-    return this.appService
-      .ogmHealthCheck()
-      .then((databaseInfo) =>
-        response
-          .header('Content-Type', 'application/json')
-          .status(HttpStatus.OK)
-          .send(databaseInfo),
-      )
-      .catch((error: ServiceException) =>
-        response
-          .header('Content-Type', 'application/json')
-          .status(error.code)
-          .send({ error }),
-      );
-  }
 }

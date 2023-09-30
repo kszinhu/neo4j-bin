@@ -1,5 +1,5 @@
 import { Controller } from '@nestjs/common';
-import { Product } from './product.interface';
+import { Product } from './product.dto';
 import { BaseModelController } from 'core/concerns/model/baseModel.controller';
 import { ProductsService } from './product.service';
 

@@ -1,8 +1,6 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 
-import { OGMModule } from 'core/database/ogm-neo4j/ogm.module';
-import { Neo4jConfig } from 'core/database/ogm-neo4j/ogm.interface';
 import Setup from 'core/config/app/configuration';
 import { UsersController } from './user.controller';
 import { UsersService } from './user.service';
@@ -21,21 +19,6 @@ describe('UsersController', () => {
           isGlobal: true,
           envFilePath: '.env.test',
           load: [Setup],
-        }),
-        OGMModule.forRootAsync({
-          imports: [ConfigModule],
-          inject: [ConfigService],
-          useFactory: async (
-            configService: ConfigService,
-          ): Promise<Neo4jConfig> => ({
-            connectionString: configService.get<string>(
-              'database.connectionString',
-            ),
-            database: configService.get<string>('database.name'),
-            password: configService.get<string>('database.user.password'),
-            username: configService.get<string>('database.user.username'),
-            config: configService.get<object>('database.config'),
-          }),
         }),
       ],
     }).compile();

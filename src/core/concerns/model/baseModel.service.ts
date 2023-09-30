@@ -1,69 +1,62 @@
-import { BadGatewayException, HttpStatus } from '@nestjs/common';
-import { Model } from 'ogm-neo4j/models';
+import { HttpStatus } from '@nestjs/common';
+import { DatabaseService } from 'core/database/database.service';
 
-import { OGMService } from 'core/database/ogm-neo4j/ogm.service';
-import {
-  AllResponse,
-  CreateResponse,
-  DeleteResponse,
-  GetResponse,
-  IBaseModelService,
-} from './IBaseModel.service';
+import { IBaseModelService } from './IBaseModel.service';
 import { JsonData } from './baseModel.controller';
+import { Prisma, PrismaClient } from '@prisma/client';
+import { ZodSchema } from 'zod';
 
 export interface ServiceException {
   code: HttpStatus;
   cause: JsonData;
 }
 
-export class BaseModelService<T extends Model<any, any>>
-  implements IBaseModelService<T>
+export class BaseModelService<
+  T extends Lowercase<Prisma.ModelName>,
+  EntitySchema extends Record<string, any>,
+  I extends keyof EntitySchema,
+> implements IBaseModelService<EntitySchema, I>
 {
-  readonly name: string;
-  readonly #entityRepository: T;
+  readonly name: keyof DatabaseService;
+  #entityRepository: PrismaClient[T];
+  #schema: ZodSchema<EntitySchema>;
 
-  constructor(service: OGMService, name: string) {
-    this.name = name;
-    this.#entityRepository = service.app.retrieveModel<T>(this.name);
-  }
-
-  create(entity: Parameters<T['create']>['0']) {
-    try {
-      return new Promise((resolve, reject) => {
-        this.#entityRepository
-          .create(entity)
-          .then((created) => resolve(created as any))
-          .catch((error) => reject(error));
-      }) as CreateResponse<T>;
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
-  }
-
-  getAll(
-    properties?: Parameters<T['all']>['0'],
-    options?: Parameters<T['all']>['1'],
+  constructor(
+    service: DatabaseService,
+    name: keyof DatabaseService,
+    schema: ZodSchema<EntitySchema>,
   ) {
-    try {
-      return this.#entityRepository.all(properties, options) as AllResponse<T>;
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+    this.name = name;
+    this.#entityRepository = service[name] as PrismaClient[T];
+    this.#schema = schema;
   }
 
-  get(id: Parameters<T['find']>['0']) {
-    try {
-      return this.#entityRepository.find(id) as GetResponse<T>;
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+  getAll(): Promise<EntitySchema[]> {
+    // @ts-expect-error - There is no way to infer the type of repository
+    return this.#entityRepository.findMany();
   }
 
-  delete(id: Parameters<T['delete']>['0']) {
-    try {
-      return this.#entityRepository.delete(id) as DeleteResponse<T>;
-    } catch (error) {
-      throw new BadGatewayException(error);
-    }
+  get(id: EntitySchema[I]): Promise<EntitySchema> {
+    // @ts-expect-error - There is no way to infer the type of repository
+    return this.#entityRepository.findUnique({ where: { id } });
+  }
+
+  create(data: Partial<EntitySchema>): Promise<EntitySchema> {
+    this.#schema.parse(data);
+    // @ts-expect-error - There is no way to infer the type of repository
+    return this.#entityRepository.create({ data });
+  }
+
+  delete(id: EntitySchema[I]): Promise<EntitySchema> {
+    // @ts-expect-error - There is no way to infer the type of repository
+    return this.#entityRepository.delete({ where: { id } });
+  }
+
+  update(
+    id: EntitySchema[I],
+    data: Partial<EntitySchema>,
+  ): Promise<EntitySchema> {
+    // @ts-expect-error - There is no way to infer the type of repository
+    return this.#entityRepository.update({ where: { id }, data });
   }
 }

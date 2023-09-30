@@ -1,32 +1,17 @@
 import { MiddlewareConsumer, Module } from '@nestjs/common';
-import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ConfigModule } from '@nestjs/config';
 
-import { OGMModule } from 'core/database/ogm-neo4j/ogm.module';
-import { Neo4jConfig } from 'core/database/ogm-neo4j/ogm.interface';
 import { AppLoggerMiddleware } from 'core/middleware/logger';
 import Setup from 'core/config/app/configuration';
 import { Modules } from 'modules';
 import { AppService } from './app.service';
 import { AppController } from 'app.controller';
+import { DatabaseModule } from './core/database/database.module';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, load: [Setup] }),
-    OGMModule.forRootAsync({
-      imports: [ConfigModule],
-      inject: [ConfigService],
-      useFactory: async (
-        configService: ConfigService,
-      ): Promise<Neo4jConfig> => ({
-        connectionString: configService.get<string>(
-          'database.connectionString',
-        ),
-        database: configService.get<string>('database.name'),
-        password: configService.get<string>('database.user.password'),
-        username: configService.get<string>('database.user.username'),
-        config: configService.get<object>('database.config'),
-      }),
-    }),
+    ConfigModule.forRoot({ isGlobal: true, load: [Setup('postgres')] }),
+    DatabaseModule,
     ...Modules,
   ],
   controllers: [AppController],

@@ -20,6 +20,11 @@ COPY src/core/database/schema.prisma ./prisma/
 RUN npm ci --only=production \
   && npm cache clean --force
 
+# ----------------
+# Generate prisma client
+# ----------------
+RUN npx prisma generate --schema=./prisma/schema.prisma
+
 COPY . .
 
 RUN npm run build

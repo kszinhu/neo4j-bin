@@ -5,6 +5,8 @@ services:
     container_name: kszinhu.ecommerce-analysis.api.neo4j
     image: ghcr.io/kszinhu/neo4j-bin:dbms-neo4j
     restart: unless-stopped
+    ports:
+      - "0.0.0.0:${APP_NEO4J_PORT}:${APP_NEO4J_PORT}"
     networks:
       - kszinhu
     env_file:
@@ -14,6 +16,8 @@ services:
     container_name: kszinhu.ecommerce-analysis.api.postgres
     image: ghcr.io/kszinhu/neo4j-bin:dbms-postgres
     restart: unless-stopped
+    ports:
+      - "0.0.0.0:${APP_POSTGRES_PORT}:${APP_POSTGRES_PORT}"
     networks:
       - kszinhu
     env_file:

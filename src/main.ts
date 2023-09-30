@@ -6,7 +6,7 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 
-import Swagger from 'core/config/app/swagger';
+import { SwaggerInit } from 'core/config/app/swagger';
 import { AppModule } from './app.module';
 
 type Application = INestApplication & NestFastifyApplication;
@@ -17,7 +17,7 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
-  Swagger(app, {
+  SwaggerInit(app, {
     title: 'E-Commerce events API',
     description: 'API for analysis of E-Commerce events',
     version: '0.0.1',

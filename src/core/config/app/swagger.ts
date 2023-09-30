@@ -8,7 +8,7 @@ export interface ISwaggerConfig {
   location?: string;
 }
 
-export default (app: INestApplication, config: ISwaggerConfig) => {
+export const SwaggerInit = (app: INestApplication, config: ISwaggerConfig) => {
   const swaggerConfig = new DocumentBuilder()
     .setTitle(config.title)
     .setDescription(config.description)

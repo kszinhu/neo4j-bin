@@ -11,6 +11,8 @@ RUN apk add --no-cache --virtual git
 WORKDIR /usr/src/app
 
 COPY package*.json ./
+COPY src/core/database/migrations ./prisma/
+COPY src/core/database/schema.prisma ./prisma/
 
 # ----------------
 # Install dependencies

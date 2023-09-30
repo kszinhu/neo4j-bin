@@ -10,6 +10,26 @@ services:
     env_file:
       - stack.env
 
+  api_postgres:
+    container_name: kszinhu.ecommerce-analysis.api.postgres
+    image: ghcr.io/kszinhu/neo4j-bin:dbms-postgres
+    restart: unless-stopped
+    networks:
+      - kszinhu
+    env_file:
+      - stack.env
+
+  database_postgres:
+    container_name: kszinhu.ecommerce-analysis.database.postgres
+    image: ${DATABASE_POSTGRES_DOCKER_IMAGE}
+    restart: unless-stopped
+    ports:
+      - "0.0.0.0:${DATABASE_POSTGRES_PORT}:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    env_file:
+      - stack.env
+
   database_neo4j:
     container_name: kszinhu.ecommerce-analysis.database.neo4j
     image: ${DATABASE_NEO4J_DOCKER_IMAGE}
@@ -37,6 +57,7 @@ volumes:
   neo4j-data:
   neo4j-logs:
   neo4j-import:
+  postgres-data:
 
 
 networks:

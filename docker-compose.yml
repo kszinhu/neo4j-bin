@@ -38,6 +38,8 @@ services:
       - type: bind
         source: ${HOME_USER}/static/dataset/ecommerce
         target: /var/lib/postgresql/data/import
+        bind:
+          propagation: rshared
     env_file:
       - stack.env
 
@@ -53,7 +55,9 @@ services:
       - neo4j-import:/var/lib/neo4j/import
       - type: bind
         source: ${HOME_USER}/static/dataset/ecommerce
-        target: /var/lib/neo4j/import
+        target: /var/lib/neo4j/import/ecommerce
+        bind:
+          propagation: rshared
     env_file:
       - stack.env
     networks:

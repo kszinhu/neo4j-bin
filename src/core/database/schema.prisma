@@ -28,7 +28,7 @@ model Category {
 }
 
 enum EventKind {
-  car
+  cart
   view
   purchase
   remove_from_cart

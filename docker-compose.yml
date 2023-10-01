@@ -5,6 +5,8 @@ services:
     container_name: kszinhu.ecommerce-analysis.api.neo4j
     image: ghcr.io/kszinhu/neo4j-bin:dbms-neo4j
     restart: unless-stopped
+    depends_on:
+      - database_neo4j
     ports:
       - "0.0.0.0:${APP_NEO4J_PORT}:${APP_NEO4J_PORT}"
     networks:
@@ -16,6 +18,8 @@ services:
     container_name: kszinhu.ecommerce-analysis.api.postgres
     image: ghcr.io/kszinhu/neo4j-bin:dbms-postgres
     restart: unless-stopped
+    depends_on:
+      - database_postgres
     ports:
       - "0.0.0.0:${APP_POSTGRES_PORT}:${APP_POSTGRES_PORT}"
     networks:
@@ -31,6 +35,11 @@ services:
       - "0.0.0.0:${DATABASE_POSTGRES_PORT}:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - type: bind
+        source: ${HOME_USER}/static/dataset/ecommerce
+        target: /var/lib/postgresql/data/import
+        bind:
+          propagation: rshared
     env_file:
       - stack.env
 
@@ -44,6 +53,11 @@ services:
       - neo4j-data:/var/lib/neo4j/data
       - neo4j-logs:/var/lib/neo4j/logs
       - neo4j-import:/var/lib/neo4j/import
+      - type: bind
+        source: ${HOME_USER}/static/dataset/ecommerce
+        target: /var/lib/neo4j/import/ecommerce
+        bind:
+          propagation: rshared
     env_file:
       - stack.env
     networks:

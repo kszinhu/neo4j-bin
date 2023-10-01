@@ -36,8 +36,8 @@ services:
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - type: bind
-        source: ./static
-        target: ${HOME_USER}/static/dataset/ecommerce
+        source: ${HOME_USER}/static/dataset/ecommerce
+        target: /var/lib/postgresql/data/import
     env_file:
       - stack.env
 
@@ -52,8 +52,8 @@ services:
       - neo4j-logs:/var/lib/neo4j/logs
       - neo4j-import:/var/lib/neo4j/import
       - type: bind
-        source: ./static
-        target: ${HOME_USER}/static/dataset/ecommerce
+        source: ${HOME_USER}/static/dataset/ecommerce
+        target: /var/lib/neo4j/import
     env_file:
       - stack.env
     networks:

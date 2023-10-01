@@ -11,7 +11,7 @@ import { AppController } from 'app.controller';
 
 @Module({
   imports: [
-    ConfigModule.forRoot({ isGlobal: true, load: [Setup] }),
+    ConfigModule.forRoot({ isGlobal: true, load: [Setup('neo4j')] }),
     OGMModule.forRootAsync({
       imports: [ConfigModule],
       inject: [ConfigService],

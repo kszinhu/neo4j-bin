@@ -19,12 +19,12 @@ import { AppController } from 'app.controller';
         configService: ConfigService,
       ): Promise<Neo4jConfig> => ({
         connectionString: configService.get<string>(
-          'database.connectionString',
+          'DATABASE.CONNECTION_STRING',
         ),
-        database: configService.get<string>('database.name'),
-        password: configService.get<string>('database.user.password'),
-        username: configService.get<string>('database.user.username'),
-        config: configService.get<object>('database.config'),
+        database: configService.get<string>('DATABASE.NAME'),
+        password: configService.get<string>('DATABASE.USER.PASSWORD'),
+        username: configService.get<string>('DATABASE.USER.USERNAME'),
+        config: configService.get<object>('DATABASE.CONFIG'),
       }),
     }),
     ...Modules,

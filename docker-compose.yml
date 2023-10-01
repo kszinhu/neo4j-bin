@@ -68,7 +68,8 @@ volumes:
   neo4j-logs:
   neo4j-import:
   postgres-data:
-
+  "${HOME_USER}/datasets/ecommerce":
+    external: true
 
 networks:
   kszinhu:

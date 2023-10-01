@@ -39,6 +39,4 @@ ENV NODE_ENV=production
 
 COPY --from=builder /usr/src/app .
 
-EXPOSE 3000
-
-CMD ["npm", "run", "start:prod"]
+CMD ["npm", "run", "start:migrate:prod"]

@@ -1,6 +1,6 @@
 import { Controller } from '@nestjs/common';
 
-import { BaseModelController } from 'core/concerns/model/baseModel.controller';
+import { BaseModelController } from '@core/concerns/model';
 import { CategoriesService } from './category.service';
 import { Category } from './category.dto';
 

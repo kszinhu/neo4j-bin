@@ -1,8 +1,8 @@
 import { Injectable, NotImplementedException } from '@nestjs/common';
 import { type Event, eventSchema } from './event.dto';
-import { DatabaseService } from 'core/database/database.service';
-import { BaseModelService } from 'core/concerns/model/baseModel.service';
-import { $Enums } from '@prisma/client';
+import { DatabaseService } from '@core/database/database.service';
+import { BaseModelService } from '@core/concerns/model';
+import { $Enums as Enums } from '@prisma/client';
 
 @Injectable()
 export class EventsService extends BaseModelService<'event', Event, 'id'> {
@@ -13,7 +13,7 @@ export class EventsService extends BaseModelService<'event', Event, 'id'> {
   get(id: number): Promise<{
     id: number;
     time: Date;
-    kind: $Enums.EventKind;
+    kind: Enums.EventKind;
     user_session: string;
     user_id: number;
     product_id: number;
@@ -24,7 +24,7 @@ export class EventsService extends BaseModelService<'event', Event, 'id'> {
   delete(id: number): Promise<{
     id: number;
     time: Date;
-    kind: $Enums.EventKind;
+    kind: Enums.EventKind;
     user_session: string;
     user_id: number;
     product_id: number;

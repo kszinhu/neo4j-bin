@@ -6,8 +6,8 @@ import {
   NestFastifyApplication,
 } from '@nestjs/platform-fastify';
 
-import { SwaggerInit } from 'core/config/app/swagger';
 import { AppModule } from './app.module';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 type Application = INestApplication & NestFastifyApplication;
 
@@ -17,11 +17,14 @@ async function bootstrap() {
     new FastifyAdapter(),
   );
 
-  SwaggerInit(app, {
-    title: 'E-Commerce events API',
-    description: 'API for analysis of E-Commerce events',
-    version: '0.0.1',
-  });
+  const swaggerConfig = new DocumentBuilder()
+      .setTitle('E-Commerce events API')
+      .setDescription('API for analysis of E-Commerce events')
+      .setVersion('0.0.1')
+      .build(),
+    document = SwaggerModule.createDocument(app, swaggerConfig);
+
+  SwaggerModule.setup('docs', app, document);
 
   const configService = app.get(ConfigService);
 

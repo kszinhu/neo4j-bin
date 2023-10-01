@@ -1,4 +1,4 @@
-import { DatabaseService } from 'core/database/database.service';
+import { DatabaseService } from '@core/database/database.service';
 
 export interface IBaseModelService<
   T extends Record<string, any>,

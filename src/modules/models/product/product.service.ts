@@ -1,7 +1,7 @@
 import { Injectable } from '@nestjs/common';
-import { BaseModelService } from 'core/concerns/model/baseModel.service';
+import { BaseModelService } from '@core/concerns/model';
 import { Product, productSchema } from './product.dto';
-import { DatabaseService } from 'core/database/database.service';
+import { DatabaseService } from '@core/database/database.service';
 
 @Injectable()
 export class ProductsService extends BaseModelService<

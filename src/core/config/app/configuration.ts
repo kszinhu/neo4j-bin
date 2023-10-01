@@ -1,7 +1,7 @@
-const handleConnectionString = (): string => {
-  if (process.env.DATABASE_POSTGRES_URL) {
+const handleConnectionString = (appVersion: 'postgres' | 'neo4j'): string => {
+  if (process.env.DATABASE_POSTGRES_URL && appVersion === 'postgres') {
     return process.env.DATABASE_POSTGRES_URL;
-  } else if (process.env.DATABASE_NEO4J_URL) {
+  } else if (process.env.DATABASE_NEO4J_URL && appVersion === 'neo4j') {
     return process.env.DATABASE_NEO4J_URL;
   }
 
@@ -45,6 +45,6 @@ export default (appVersion: 'postgres' | 'neo4j') => () => ({
     CONFIG: {},
     PORT: parseInt(process.env.DATABASE_PORT ?? '', 10) || 5432,
     PROTOCOL: process.env.DATABASE_PROTOCOL,
-    CONNECTION_STRING: handleConnectionString(),
+    CONNECTION_STRING: handleConnectionString(appVersion),
   },
 });

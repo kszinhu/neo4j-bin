@@ -53,6 +53,7 @@ services:
       - neo4j-data:/var/lib/neo4j/data
       - neo4j-logs:/var/lib/neo4j/logs
       - neo4j-import:/var/lib/neo4j/import
+      - neo4j-plugins:/var/lib/neo4j/plugins
       - type: bind
         source: ${HOME_USER}/static/dataset/ecommerce
         target: /var/lib/neo4j/import/ecommerce

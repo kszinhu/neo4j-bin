@@ -8,8 +8,8 @@ import {
   DeleteResponse,
   GetResponse,
   IBaseModelService,
-} from './IBaseModel.service';
-import { JsonData } from './baseModel.controller';
+} from './Ibase.service';
+import { JsonData } from './base.controller';
 
 export interface ServiceException {
   code: HttpStatus;
@@ -29,12 +29,7 @@ export class BaseModelService<T extends Model<any, any>>
 
   create(entity: Parameters<T['create']>['0']) {
     try {
-      return new Promise((resolve, reject) => {
-        this.#entityRepository
-          .create(entity)
-          .then((created) => resolve(created as any))
-          .catch((error) => reject(error));
-      }) as CreateResponse<T>;
+      return this.#entityRepository.create(entity) as CreateResponse<T>;
     } catch (error) {
       throw new BadGatewayException(error);
     }

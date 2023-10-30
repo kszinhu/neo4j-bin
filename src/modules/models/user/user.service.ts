@@ -1,7 +1,8 @@
 import { Injectable } from '@nestjs/common';
-import type { UserModel } from './user.interface';
-import { BaseModelService } from 'core/concerns/model/baseModel.service';
+import { BaseModelService } from 'core/concerns/model';
 import { OGMService } from 'core/database/ogm-neo4j/ogm.service';
+
+import type { UserModel } from './user.interface';
 
 @Injectable()
 export class UsersService extends BaseModelService<UserModel> {

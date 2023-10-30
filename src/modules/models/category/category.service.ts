@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { BaseModelService } from 'core/concerns/model/baseModel.service';
+
+import { BaseModelService } from 'core/concerns/model';
 import { OGMService } from 'core/database/ogm-neo4j/ogm.service';
-import { CategoryModel } from './category.interface';
+
+import type { CategoryModel } from './category.interface';
 
 @Injectable()
 export class CategoriesService extends BaseModelService<CategoryModel> {

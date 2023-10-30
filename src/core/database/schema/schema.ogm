@@ -9,7 +9,7 @@ Node Product {
 }
 
 Node Category {
-  id:    Int     @identifier(auto: true)
+  id:    String     @identifier
   code:  String?
 }
 

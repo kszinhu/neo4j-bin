@@ -47,4 +47,5 @@ export default (appVersion: 'postgres' | 'neo4j') => () => ({
     PROTOCOL: process.env.DATABASE_PROTOCOL,
     CONNECTION_STRING: handleConnectionString(appVersion),
   },
+  DOMAIN: process.env.DOMAIN,
 });

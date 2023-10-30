@@ -2,8 +2,8 @@ import { Controller, Get, HttpStatus, Res } from '@nestjs/common';
 import { FastifyReply as Response } from 'fastify';
 
 import { AppService } from './app.service';
-import { JsonData } from 'core/concerns/model/baseModel.controller';
-import { ServiceException } from 'core/concerns/model/baseModel.service';
+import { JsonData } from 'core/concerns/model/base.controller';
+import { ServiceException } from 'core/concerns/model/base.service';
 
 @Controller()
 export class AppController {

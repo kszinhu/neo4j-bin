@@ -16,6 +16,7 @@ services:
     image: neo4j:5.11-enterprise
     ports:
       - '7687:7687'
+      - '7474:7474'
     volumes:
       - data:/data
       - logs:/logs

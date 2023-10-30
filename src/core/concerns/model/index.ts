@@ -1,5 +1,11 @@
-import { BaseModelService } from './baseModel.service';
-import { BaseModelController } from './baseModel.controller';
-import { IBaseModelService } from './IBaseModel.service';
+import { BaseModelService } from './base.service';
+import { BaseModelController } from './base.controller';
+import { BaseSerializer } from './base.serializer';
+import { IBaseModelService } from './Ibase.service';
 
-export { BaseModelService, BaseModelController, IBaseModelService };
+export {
+  BaseModelService,
+  BaseModelController,
+  BaseSerializer,
+  IBaseModelService,
+};

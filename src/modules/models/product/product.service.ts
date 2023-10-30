@@ -1,7 +1,9 @@
 import { Injectable } from '@nestjs/common';
-import { BaseModelService } from 'core/concerns/model/baseModel.service';
+
+import { BaseModelService } from 'core/concerns/model';
+
 import { OGMService } from 'core/database/ogm-neo4j/ogm.service';
-import { ProductModel } from './product.interface';
+import type { ProductModel } from './product.interface';
 
 @Injectable()
 export class ProductsService extends BaseModelService<ProductModel> {
